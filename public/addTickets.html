@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>STEM Park Digital Lucky Draw</title>
+
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
+
+    <script defer>
+        var firebaseConfig = {
+            apiKey: "AIzaSyDOKckadkyexmm7Wxame9g0hGbK5cFnMMM",
+            authDomain: "test-9a69d.firebaseapp.com",
+            databaseURL: "https://test-9a69d.firebaseio.com",
+            projectId: "test-9a69d",
+            storageBucket: "test-9a69d.appspot.com",
+            messagingSenderId: "391334558868",
+            appId: "1:391334558868:web:de23fa6ba56ca74d"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+
+<body>
+    <h1>Ticket Additions</h1>
+    <form id="registerForm">
+        
+        <p>
+            <label>IC/Passport Number</label><br />
+            <input type="text" name="icNum" id="icNum">
+        </p>
+
+        <p>
+            <label>Number of Additional Tickets</label><br />
+            <input type="text" name="phoneNum" id="addTicketNum">
+        </p>
+
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+    <script src="addTickets.js"></script>
+
+</body>
+</html>
