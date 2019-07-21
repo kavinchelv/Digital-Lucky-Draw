@@ -1,17 +1,8 @@
 // JavaScript source code
 
-document.addEventListener("DOMContentLoaded", event => {
-    const app = firebase.app;
-});
-
 //Function to get form values (Text Boxes Only)
 function getInputVal(id) {
     return document.getElementById(id).value;
-}
-
-
-function redirect() {
-    document.location.href = "./registrationComplete.html";
 }
 
 //Listen for form submit
@@ -78,6 +69,9 @@ function submitForm(e) {
     localStorage[3] = membership;
     localStorage[4] = guestType;
     localStorage[5] = shirt;
-    
+    redirect();
 }
 
+function redirect() {
+    document.location.href = "./registrationComplete.html";
+}
