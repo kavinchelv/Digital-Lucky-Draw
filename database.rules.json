@@ -5,6 +5,7 @@
     "Participants": {
       ".indexOn": [ "idNum" ]
     },
+
     "luckyDrawNumbers": {
       "day1": {
         ".indexOn": [ "luckyNum" ]

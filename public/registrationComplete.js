@@ -30,23 +30,24 @@ function saveMessages(name, membership, guestType, shirt, noOfTickets, icNum) {
 }
 
 //Save Lucky draw numbers to firebase
-function saveLuckyNum(name, icNum, luckyNumDay1,luckyNumDay2) {
+function saveLuckyNum(name, icNum, day, luckyNum) {
     //Reference messages collection
-    var messagesRef = firebase.database().ref('luckyDrawNumbers/day1');
-    //var newMessageRef = messagesRef.push();
-    messagesRef.push({
-        luckyNum: luckyNumDay1,
-        name: name,
-        idNum: icNum
-    });
-
-    messagesRef = firebase.database().ref('luckyDrawNumbers/day2');
-    messagesRef.push({
-        luckyNum: luckyNumDay2,
-        name: name,
-        idNum: icNum
-    });
-    //newMessageRef.push(newMessageRef);
+    if (day == 1) {
+        var messagesRef = firebase.database().ref('luckyDrawNumbers/day1');
+        messagesRef.push({
+            luckyNum: luckyNum,
+            name: name,
+            idNum: icNum
+        });
+    }
+    if (day == 2) {
+        messagesRef = firebase.database().ref('luckyDrawNumbers/day2');
+        messagesRef.push({
+            luckyNum: luckyNum,
+            name: name,
+            idNum: icNum
+        });
+    }
 }
 
 function checkLuckyNum(addTicketNum, luckyNum) {
@@ -88,7 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var luckyNumDay1 = [];
     var luckyNumDay2 = [];
     var generatedNum = [];
-
+    var firstTimeDay1 = 1;
+    var firstTimeDay2 = 1;
     var db = firebase.database();
     
 
@@ -98,53 +100,76 @@ document.addEventListener("DOMContentLoaded", function () {
         luckyNumDay1[i] = generatedNum[0];
         luckyNumDay2[i] = generatedNum[1];
     }
-    luckyNumDay1[0] = 13924;
+    
 
     for (i = 0; i < noOfTickets; i++) {
-        
-        //Checks if Day 1 Numbers already exists
-        var gent = db.ref('luckyDrawNumbers/day1'); 
-        var user = gent.orderByChild('luckyNum').equalTo(luckyNumDay1[i]);
-        user.once("child_added").then(function (snapshot) {
-            snapshot.forEach(function (childSnapshot) {
-                var key = childSnapshot.key;
-                while (childSnapshot.val().key.luckyNum == luckyNumDay1[i]) {
-                console.log('Duplicate Detected');
-                generatedNum = randomNumberGenerate();
-                luckyNumDay1[i] = generatedNum[0];
-                }
-            });
-        });
-        /*user.once("child_added", function (snapshot) {
-            snapshot.forEach(function (child) {
-                var curKey = child.key();//Finds the key of the participant to be updated
-                console.log(curKey);
-                return firebase.database().ref('luckyDrawNumbers/day1/' + curKey).once('value').then(function (snapshot) {
-                    var curLuckyNum = (snapshot.val() && snapshot.val().luckyNum); //retrieves current number of tickets
-                    while (luckyNumDay1[i] == curLuckyNum) {
-                        console.log('Duplicate Detected');
+        luckyNumDay1[i] = 13924;
+        localStorage[6] = luckyNumDay1[i];
+
+        if (firstTimeDay1 == 1) {
+            user.once("value").then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    luckyNumDay1[i] = localStorage[6];
+                    var key = childSnapshot.key;
+                    var curLuckyNum = childSnapshot.child('luckyNum').val();
+                    console.log(curLuckyNum + "this is test");
+                    console.log(key);
+                    console.log(luckyNumDay1[i]);
+                    while (curLuckyNum == luckyNumDay1[i]) {
                         console.log(curLuckyNum);
-                        generatedNum = randomNumberGenerate();
+                        console.log(luckyNumDay1[i]);
+                        console.log('Duplicate Detected');
+                        var generatedNum = randomNumberGenerate();
                         luckyNumDay1[i] = generatedNum[0];
+                        localStorage[6] = luckyNumDay1[i];
                     }
+                    saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);    
                 });
             });
-        });*/
-        console.log(user);
-       /* while (user != null) {
-            generatedNum = randomNumberGenerate();
-            luckyNumDay1[i] = generatedNum[0];
-            user = gent.orderByChild('luckyNum').equalTo(luckyNumDay1[i]);
-            console.log(user);
-        }*/
+            firstTimeDay1 = 0;
+            
+        }
+
+        else {
+            var day = 1;
+            //Checks if Day 1 Numbers already exists
+            var gent = db.ref('luckyDrawNumbers/day1');
+            var user = gent.orderByChild('luckyNum').equalTo(luckyNumDay1[i]);
+            console.log(luckyNumDay1[i]);
+            user.once("value").then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    luckyNumDay1[i] = localStorage[6];
+                    var key = childSnapshot.key;
+                    var curLuckyNum = childSnapshot.child('luckyNum').val();
+                    console.log(curLuckyNum + "this is test");
+                    console.log(key);
+                    console.log(luckyNumDay1[i]);
+                        while (curLuckyNum == luckyNumDay1[i]) {
+                            console.log(curLuckyNum);
+                            console.log(luckyNumDay1[i]);
+                            console.log('Duplicate Detected');
+                            var generatedNum = randomNumberGenerate();
+                            luckyNumDay1[i] = generatedNum[0];
+                            localStorage[6] = luckyNumDay1[i];
+                        }
+                            saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);
+                    console.log(localStorage[6] + ' is the current number');
+
+                });
+                luckyNumDay1[i] = localStorage[6];
+                console.log(luckyNumDay1[i] + ' is the number after the rerandomisaton');
+            });
+
+
+        }
         //checks if Day 2 Numbers already exists
         var gent = db.ref('luckyDrawNumbers/day2'); 
         var user = gent.orderByChild('luckyNum').equalTo(luckyNumDay2[i]);
-        user.once('child_added', function (snapshot) {
+        user.once('value', function (snapshot) {
             snapshot.forEach(function (child) {
                 var curKey = child.key;//Finds the key of the participant to be updated
                 console.log(curKey);
-                return firebase.database().ref('luckyDrawNumbers/day2/' + curKey).once('value').then(function (snapshot) {
+                firebase.database().ref('luckyDrawNumbers/day2/' + curKey).once('value').then(function (snapshot) {
                     var curLuckyNum = (snapshot.val() && snapshot.val().luckyNum); //retrieves current number of tickets
                     while (luckyNumDay2[i] == curLuckyNum) {
                         console.log('Duplicate Detected');
@@ -155,12 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             });
         });
-        /* while (user != null) {
-            generatedNum = randomNumberGenerate();
-            luckyNumDay2[i] = generatedNum[1];
-            user = gent.orderByChild('luckyNum').equalTo(luckyNumDay2[i]);
-            console.log(user);
-        }*/
     }
 
     for(i = 0; i < noOfTickets; i++) {
