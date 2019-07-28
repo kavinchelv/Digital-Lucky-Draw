@@ -1,55 +1,3 @@
-const name = localStorage[0];
-const icNum = localStorage[1];
-const noOfTickets = localStorage[2];
-const membership = localStorage[3];
-const guestType = localStorage[4];
-const shirt = localStorage[5];
-const specialTicket = localStorage[6];
-
-function showLuckyNum(luckyNum) {
-        document.getElementById("write").innerHTML = luckyNum;
-}
-
-//Save Participants to firebase
-function saveMessages(name, membership, guestType, shirt, noOfTickets, icNum) {
-    var messagesRef = firebase.database().ref('Participants/' + name);
-    messagesRef.set({
-        icNum: icNum,
-        membership: membership,
-        guestType: guestType,
-        shirt: shirt,
-        noOfTickets: noOfTickets
-    });
-}
-
-//Save Lucky draw numbers to firebase
-function saveLuckyNum(name, icNum, day, luckyNum) {
-    return new Promise((resolve) => {
-        if (day == 1) {
-            var messagesRef = firebase.database().ref('luckyDrawNumbers/day1/' + luckyNum);
-            messagesRef.set({
-                name: name,
-                idNum: icNum
-            });
-        }
-        if (day == 2) {
-            messagesRef = firebase.database().ref('luckyDrawNumbers/day2/' + luckyNum);
-            messagesRef.set({
-                name: name,
-                idNum: icNum
-            });
-        }
-        if (day == 3) {
-            messagesRef = firebase.database().ref('luckyDrawNumbers/Special/' + luckyNum);
-            messagesRef.set({
-                name: name,
-                idNum: icNum
-            });
-        }
-        resolve(luckyNum + ' is saved');
-    })
-}
-
 //Random number generator
 function randomNumberGenerate() {
     return new Promise((resolve) => {
@@ -89,7 +37,7 @@ function checkForDuplicateDay1(luckyNum) {
                 condition = 0
             }
             resolve(condition);
-        }); 
+        });
     })
 }
 
@@ -138,82 +86,72 @@ function checkForDuplicateSpecial(luckyNum) {
     })
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-    //save participants to firebase
-    saveMessages(name, membership, guestType, shirt, noOfTickets, icNum);
-
-    document.getElementById("displayName").innerHTML = name + "\n \n";
-    document.getElementById("displayIC").innerHTML = icNum + "\n \n";
-
-    var luckyNumDay1 = [];
-    var luckyNumDay2 = [];
+async function drawLuckyNumber() {
+    var luckyNumDay1;
+    var luckyNumDay2;
     var generatedNum = [];
-
-    //Loop to generate initial Lucky Numbers
-    for (i = 0; i < noOfTickets; i++) {
-        generatedNum = await randomNumberGenerate();
-        luckyNumDay1[i] = generatedNum[0];
-        luckyNumDay2[i] = generatedNum[1];
-        console.log('Numbers generated')
-    }
-
-    //Loop to check and create/save Day 1 Tickets
-    for (i = 0; i < noOfTickets; i++) {
+    var day = 3;
+    //Loop to generate initial Lucky Number
+    generatedNum = await randomNumberGenerate();
+    luckyNumDay1 = generatedNum[0];
+    luckyNumDay2 = generatedNum[1];
+    luckyNumSpecial = await randomSpecialNumberGenerate();
+    console.log('Numbers generated');
+    if (day == 1) {
         console.log('Day 1 Loop entered')
-        var duplicate = await checkForDuplicateDay1(luckyNumDay1[i]);
+        var duplicate = await checkForDuplicateDay1(luckyNumDay1);
         console.log(duplicate);
         if (duplicate == 1) {
-            while (duplicate == 1) {
+            var name = await retrieveWinnerName(luckyNumDay1, day)
+            displayLuckyNumbers(luckyNumDay1, name);
+        }
+        else if (duplicate != 1) {
+            while (duplicate != 1) {
                 console.log('Generating new number...');
                 generatedNum = await randomNumberGenerate();
                 console.log('New number generated.');
-                luckyNumDay1[i] = generatedNum[0];
-                console.log('New Number: ' + luckyNumDay1[i]);
+                luckyNumDay1 = generatedNum[0];
+                console.log('New Number: ' + luckyNumDay1);
                 console.log('Checking if new number is duplicate...');
-                duplicate = await checkForDuplicateDay1(luckyNumDay1[i]);
+                duplicate = await checkForDuplicateDay1(luckyNumDay1);
                 console.log(duplicate + ' OOOOO')
             }
             console.log('Duplicate Checking Done. Saving...');
-            await saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);
-        }
-        else if (duplicate != 1) {
-            console.log('No duplicates. Saving...');
-            await saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);
+            var name = await retrieveWinnerName(luckyNumDay1, day);
+            displayLuckyNumbers(luckyNumDay1, name);
         }
     }
-    
-    //Loop to check and create/save Day 2 Tickets
-    for (i = 0; i < noOfTickets; i++) {
+    if (day == 2) {
+        //Loop to Draw Day 2 Ticket
         console.log('Day 2 Loop entered')
-        var duplicate = await checkForDuplicateDay2(luckyNumDay2[i]);
+        var duplicate = await checkForDuplicateDay2(luckyNumDay2);
         console.log(duplicate);
         if (duplicate == 1) {
-            while (duplicate == 1) {
+            var name = await retrieveWinnerName(luckyNumDay2, day)
+            displayLuckyNumbers(luckyNumDay2, name);
+        }
+        else if (duplicate != 1) {
+            while (duplicate != 1) {
                 console.log('Generating new number...');
                 generatedNum = await randomNumberGenerate();
                 console.log('New number generated.');
-                luckyNumDay2[i] = generatedNum[1];
-                console.log('New Number: ' + luckyNumDay2[i]);
+                luckyNumDay2 = generatedNum[0];
+                console.log('New Number: ' + luckyNumDay2);
                 console.log('Checking if new number is duplicate...');
-                duplicate = await checkForDuplicateDay2(luckyNumDay2[i]);
+                duplicate = await checkForDuplicateDay2(luckyNumDay2);
                 console.log(duplicate + ' OOOOO')
             }
             console.log('Duplicate Checking Done. Saving...');
-            await saveLuckyNum(name, icNum, 2, luckyNumDay2[i]);
-        }
-        else if (duplicate != 1) {
-            console.log('No duplicates. Saving...');
-            await saveLuckyNum(name, icNum, 2, luckyNumDay2[i]);
+            var name = await retrieveWinnerName(luckyNumDay2, day);
+            displayLuckyNumbers(luckyNumDay2, name);
         }
     }
-
-    var luckyNumSpecial = await randomSpecialNumberGenerate();
-    if (specialTicket == 1) {
+    if (day == 3) {
         console.log('Special Loop entered')
         var duplicate = await checkForDuplicateSpecial(luckyNumSpecial);
         console.log(duplicate);
-        if (duplicate == 1) {
-            while (duplicate == 1) {
+        if (duplicate != 1) {
+            while (duplicate != 1) {
                 console.log('Generating new number...');
                 luckyNumSpecial = await randomSpecialNumberGenerate();
                 console.log('New number generated.');
@@ -223,20 +161,57 @@ document.addEventListener("DOMContentLoaded", async function () {
                 console.log(duplicate + ' OOOOO')
             }
             console.log('Duplicate Checking Done. Saving...');
-            await saveLuckyNum(name, icNum, 3, luckyNumSpecial);
+            displayLuckyNumbers(luckyNumSpecial, name);
+            var name = await retrieveWinnerName(luckyNumSpecial, day);
         }
-        else if (duplicate != 1) {
+        else if (duplicate == 1) {
             console.log('No duplicates. Saving...');
-            await saveLuckyNum(name, icNum, 3, luckyNumSpecial);
+            var name = await retrieveWinnerName(luckyNumSpecial, day);
+            displayLuckyNumbers(luckyNumSpecial, name);
         }
     }
 
-    showLuckyNum(luckyNumDay1);
-    document.getElementById("special").innerHTML = luckyNumSpecial;
-    console.log(name);
-    console.log(membership);
-    console.log(guestType);
-    console.log(shirt);
-    console.log(noOfTickets);
-    console.log(icNum);
+}
+
+function retrieveWinnerName(luckyNum, day) {
+    return new Promise((resolve) => {
+        var db = firebase.database();
+        if (day == 1) {
+            var user = db.ref('luckyDrawNumbers/day1/' + luckyNum);
+            console.log(user);
+
+            user.once("value").then(function (snapshot) {
+                console.log(snapshot.child('name').val());
+                resolve(snapshot.child('name').val());
+            });
+        }
+        else if (day == 2) {
+            var user = db.ref('luckyDrawNumbers/day2/' + luckyNum);
+            console.log(user);
+
+            user.once("value").then(function (snapshot) {
+                console.log(snapshot.child('name').val());
+                resolve(snapshot.child('name').val());
+            });
+        }
+        else if (day == 3) {
+            var user = db.ref('luckyDrawNumbers/Special/' + luckyNum);
+            console.log(user);
+
+            user.once("value").then(function (snapshot) {
+                console.log(snapshot.child('name').val());
+                resolve(snapshot.child('name').val());
+            });
+        }
+    })
+}
+
+function displayLuckyNumbers(luckyNumbers, name) {
+    document.getElementById("winnerName").innerHTML = name;
+    document.getElementById("luckyNumber").innerHTML = luckyNumbers;
+
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    drawLuckyNumber();
 });

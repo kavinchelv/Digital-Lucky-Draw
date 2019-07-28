@@ -28,12 +28,8 @@
 </head>
 
 <body>
-    <h1>Ticket Additions</h1>
+    <h1>Lucky Draw Number Checking</h1>
     <form id="registerForm">
-        <p>
-            <label>Name</label><br />
-            <input type="text" name="name" id="name">
-        </p>
 
         <p>
             <label>IC/Passport Number</label><br />
@@ -41,12 +37,13 @@
         </p>
 
         <p>
-            <label>Number of Additional Tickets</label><br />
-            <input type="text" name="phoneNum" id="addTicketNum">
+            <label>Day</label> <br>
+            <input type="radio" name="Day" value="1" id="Day"> Day 1 <br>
+            <input type="radio" name="Day" value="2" id="Day"> Day 2 <br>
         </p>
 
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Add and Display</button>
+        <button id="myBtn">Display Numbers</button>
 
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -55,16 +52,13 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <p>Lucky Draw Numbers</p>
-                <p id="numbers">Loading...</p>
+                <p id="luckyNumbers">Loading...</p>
             </div>
 
         </div>
-
     </form><br />
-
+    <a class="clickMe" href="./registration.html"><font size="+2">Back</font></a>
     <a class="clickMe" href="./index.html"><font size="+2">Main Menu</font></a>
-    <a class="clickMe" href="./checkLuckyNum.html"><font size="+2">Check Ticket</font></a>
-
     <style>
         .clickMe {
             -moz-appearance: button;
@@ -106,7 +100,6 @@
             font-size: 28px;
             font-weight: bold;
         }
-
             .close:hover,
             .close:focus {
                 color: black;
@@ -114,7 +107,8 @@
                 cursor: pointer;
             }
     </style>
-    <script src="addTickets.js"></script>
+
+    <script src="checkLuckyNum.js"></script>
     <script>
         // When the user clicks on <div>, open the popup
         function myFunction() {

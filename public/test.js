@@ -16,8 +16,9 @@ function submitForm(e) {
     var internationalTickets = 6;
     var localTickets = 2;
     var mentorTickets = 2;
-    var nonMemberTickets = 1;
+    var nonMemberTickets = 0;
     var noOfTickets = 0;
+    var specialTickets = 0;
     var stemShirtTickets = 2;
     var ieeeShirtTickets = 1;
     var committeeTickets = 2;
@@ -38,12 +39,15 @@ function submitForm(e) {
     phoneNum = phoneNum.replace(/\+/g, "");
 
     //Gives no of tickets based on membership type
-    if (membership == 'International')
+    if (membership == 'International') {
         noOfTickets += internationalTickets;
+        specialTickets++;
+    }
     else if (membership == 'Local')
         noOfTickets += localTickets;
     else
         noOfTickets += nonMemberTickets;
+
     //Gives no of tickets based on shirt
     if (shirt == 'STEM')
         noOfTickets += stemShirtTickets;
@@ -69,6 +73,7 @@ function submitForm(e) {
     localStorage[3] = membership;
     localStorage[4] = guestType;
     localStorage[5] = shirt;
+    localStorage[6] = specialTickets;
     redirect();
 }
 
