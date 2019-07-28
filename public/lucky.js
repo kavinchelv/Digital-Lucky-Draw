@@ -1,3 +1,4 @@
+
 //Random number generator
 function randomNumberGenerate() {
     return new Promise((resolve) => {
@@ -90,7 +91,8 @@ async function drawLuckyNumber() {
     var luckyNumDay1;
     var luckyNumDay2;
     var generatedNum = [];
-    var day = 3;
+    var day = localStorage[9];
+    displayLuckyNumbers('', '');
     //Loop to generate initial Lucky Number
     generatedNum = await randomNumberGenerate();
     luckyNumDay1 = generatedNum[0];
@@ -161,12 +163,13 @@ async function drawLuckyNumber() {
                 console.log(duplicate + ' OOOOO')
             }
             console.log('Duplicate Checking Done. Saving...');
-            displayLuckyNumbers(luckyNumSpecial, name);
             var name = await retrieveWinnerName(luckyNumSpecial, day);
+            displayLuckyNumbers(luckyNumSpecial, name);
         }
         else if (duplicate == 1) {
             console.log('No duplicates. Saving...');
             var name = await retrieveWinnerName(luckyNumSpecial, day);
+            console.log(name);
             displayLuckyNumbers(luckyNumSpecial, name);
         }
     }
@@ -212,6 +215,8 @@ function displayLuckyNumbers(luckyNumbers, name) {
 
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    drawLuckyNumber();
+
+
+document.addEventListener("DOMContentLoaded", async function () {
+    await drawLuckyNumber();
 });

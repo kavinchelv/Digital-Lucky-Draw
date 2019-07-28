@@ -3,25 +3,41 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>STEM Park Digital Lucky Draw</title>
-
 </head>
 <body>
     <h1 class="title" style="text-align:center">STEM Park Digital Lucky Draw</h1>
-    <div style="text-align:center">
-        <a class="clickMe" href="./registration.html"><font size="+2">Registration</font></a><br /><br />
-        <a class="clickMe" href="./addTickets.html"><font size="+2">Ticket Addition</font></a><br /><br />
-        <a class="clickMe" href="./checkLuckyNum.html"><font size="+2">Check Lucky Draw Numbers</font></a><br /><br />
-        <a class="clickMe" href="./lucky.html"><font size="+2">Lucky Draw</font></a>
-    </div>
+    <form id="registerForm">
+        <div style="text-align:center">
+            <a class="clickMe" href="./registration.html"><font size="+2">Registration</font></a><br /><br />
+            <a class="clickMe" href="./addTickets.html"><font size="+2">Ticket Addition</font></a><br /><br />
+            <a class="clickMe" href="./checkLuckyNum.html"><font size="+2">Check Lucky Draw Numbers</font></a><br /><br />
+            <a class="clickMe" href="./lucky.html"><font size="+2">Lucky Draw</font></a>
+            <p>
+                <button type="submit"><font size="+2">Lucky Draw</font></button>
+            </p>
+            <p>
+                <label>Lucky Draw</label> <br>
+                <input type="radio" name="Lucky Draw" value="1" id="Lucky Draw"> Day 1
+                <input type="radio" name="Lucky Draw" value="2" id="Lucky Draw"> Day 2
+                <input type="radio" name="Lucky Draw" value="3" id="Lucky Draw" checked> Special
+            </p>
+        </div>
+
+    </form>
     <style>
-        .title{
-            display: block; 
-            font-size: 27px; 
-            letter-spacing: 1px; 
+        .title {
+            display: block;
+            font-size: 27px;
+            letter-spacing: 1px;
             margin: 0 0 5% 0;
-            text-size-adjust:auto;
+            text-size-adjust: auto;
         }
+
         .clickMe {
             -moz-appearance: button;
             -ms-appearance: button;
@@ -33,6 +49,6 @@
             padding: 0.2em 0.4em;
         }
     </style>
-
+    <script src="index.js"></script>
 </body>
 </html>
