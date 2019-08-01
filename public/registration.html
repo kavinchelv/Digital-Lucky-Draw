@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Compiled and minified JavaScript --
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
     <title>STEM Park Digital Lucky Draw</title>
 
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
@@ -34,56 +34,66 @@
 <body>
     <h1>Lucky Draw Registration</h1>
     <form id="registerForm" action="./registrationComplete.html">
-        <div style="text-align:center">
-            <p>
-                <label>Name</label> <br />
-                <input type="text" name="Name" id="Name">
-            </p>
+        <p>
+            <label>Name</label> <br />
+            <input type="text" name="Name" id="Name">
+        </p>
 
-            <p>
-                <label>IC/Passport Number</label><br />
-                <input type="text" name="icNum" id="icNum">
-            </p>
+        <p>
+            <label>IC/Passport Number</label><br />
+            <input type="text" name="icNum" id="icNum">
+        </p>
 
-            <p>
-                <label>Phone Number</label><br />
-                <input type="text" name="phoneNum" id="phoneNum">
-            </p>
+        <p>
+            <label>Phone Number</label><br />
+            <input type="text" name="phoneNum" id="phoneNum">
+        </p>
 
-            <p>
-                <label>Membership Type</label> <br>
-            <label>
-                <input class=" blue darken-3" type="radio" name="group1" value="International" id="Membership"> <span>International</span> <br>
-            </label>
-            <label>
-                <input type="radio" name="group1" value="Local" id="Membership"><span>Local </span> <br>
-            </label>
-                                                   
-                                                   <input type="radio" name="group1" value="Non-Member" id="Membership" checked> Non-Member<br>
-                                               
-                
-            </p>
+        <p>
+            <label>Membership Type</label> <br>
+            <input type="radio" name="Membership" value="International" id="Membership"> International <br>
+            <input type="radio" name="Membership" value="Local" id="Membership"> Local <br>
+            <input type="radio" name="Membership" value="Non-Member" id="Membership" checked> Non-Member<br>
+        </p>
 
-            <p>
-                <label>Guest Type</label> <br>
-                <input type="radio" name="Type" value="Committee" id="Type"> Committee <br>
-                <input type="radio" name="Type" value="mentorHelper" id="Type"> Mentors/Helper <br>
-                <input type="radio" name="Type" value="No" id="Type" checked> Normal <br>
-            </p>
+        <p>
+            <label>Guest Type</label> <br>
+            <input type="radio" name="Type" value="Committee" id="Type"> Committee <br>
+            <input type="radio" name="Type" value="mentorHelper" id="Type"> Mentors/Helper <br>
+            <input type="radio" name="Type" value="No" id="Type" checked> Normal <br>
+        </p>
 
-            <p>
-                <label>Shirt</label> <br>
-                <input type="radio" name="Shirt" value="STEM" id="Shirt"> STEM Shirt <br>
-                <input type="radio" name="Shirt" value="IEEE" id="Shirt"> IEEE Blue Shirt <br>
-                <input type="radio" name="Shirt" value="No" id="Shirt" checked> Normal <br>
-            </p>
+        <p>
+            <label>Shirt</label> <br>
+            <input type="radio" name="Shirt" value="STEM" id="Shirt"> STEM Shirt <br>
+            <input type="radio" name="Shirt" value="IEEE" id="Shirt"> IEEE Blue Shirt <br>
+            <input type="radio" name="Shirt" value="No" id="Shirt" checked> Normal <br>
+        </p>
+        <p>
+            <label>Stamps Collected</label> <br>
+            <input type="radio" name="Stamps" value="6" id="Stamps">6<br>
+            <input type="radio" name="Stamps" value="12" id="Stamps">12<br>
+            <input type="radio" name="Stamps" value="18" id="Stamps">18<br>
+            <input type="radio" name="Stamps" value="0" id="Stamps" checked>None<br />
+        </p>
 
-            <p>
-                <button type="submit">Submit</button>
-            </p>
-        </div>
+        <p>
+            <button type="submit"><font size="+2">Submit</font></button>
+        </p>
     </form>
-    <script src="test.js"></script>
-
-</body>
-</html>
+    <a class="clickMe" href="./index.html"><font size="+1">Main Menu</font></a>
+    <style>
+        .clickMe {
+            -moz-appearance: button;
+            -ms-appearance: button;
+            -o-appearance: button;
+            -webkit-appearance: button;
+            appearance: button;
+            text-decoration: none;
+            color: #000;
+            padding: 0.2em 0.4em;
+        }
+    </style>
+    <script src="test.js" > </script >
+    </body >
+</html >

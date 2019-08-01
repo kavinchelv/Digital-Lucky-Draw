@@ -26,6 +26,7 @@ function submitForm(e) {
     var membership = document.querySelector('input[name = "Membership"]:checked').value;
     var shirt = document.querySelector('input[name = "Shirt"]:checked').value;
     var guestType = document.querySelector('input[name = "Type"]:checked').value;
+    var stamps = document.querySelector('input[name = "Stamps"]:checked').value;
     var phoneNum = getInputVal('phoneNum');
     var icNum = getInputVal('icNum');
 
@@ -59,6 +60,14 @@ function submitForm(e) {
         noOfTickets += committeeTickets;
     else if (guestType == 'mentorHelper')
         noOfTickets += mentorTickets;
+
+    //Gives no of tickets based on the number of stamps collected
+    if (stamps == 6)
+        noOfTickets++;
+    else if (stamps == 12)
+        noOfTickets += 2;
+    else if (stamps == 18)
+        noOfTickets += 3;
 
     console.log(name);
     console.log(membership);

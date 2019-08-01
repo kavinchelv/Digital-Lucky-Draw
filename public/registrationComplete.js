@@ -4,7 +4,7 @@ const noOfTickets = localStorage[2];
 const membership = localStorage[3];
 const guestType = localStorage[4];
 const shirt = localStorage[5];
-const specialTicket = localStorage[6];
+var specialTicket = localStorage[6];
 
 function showLuckyNum(luckyNum) {
         document.getElementById("write").innerHTML = luckyNum;
@@ -56,7 +56,11 @@ function randomNumberGenerate() {
         var day1Num, day2Num;
         day1Num = Math.floor(Math.random() * (20000 - 1 + 1)) + 1;
         day2Num = Math.floor(Math.random() * (40000 - 20001 + 1)) + 20001;
+        console.log(day1Num, day2Num);
+        day1Num = ("00000" + day1Num).slice(-5);
+        day2Num = ("00000" + day2Num).slice(-5);
         var daysNum = [day1Num, day2Num];
+        console.log(daysNum);
         resolve(daysNum);
     })
 }
@@ -66,6 +70,8 @@ function randomSpecialNumberGenerate() {
     return new Promise((resolve) => {
         var specialNum;
         specialNum = Math.floor(Math.random() * (500 - 1 + 1)) + 1;
+        specialNum = ("000" + specialNum).slice(-3);
+        console.log(specialNum);
         resolve(specialNum);
     })
 }
@@ -136,6 +142,12 @@ function checkForDuplicateSpecial(luckyNum) {
             resolve(condition);
         });
     })
+}
+
+function paddy(num, padlen, padchar) {
+    var pad_char = typeof padchar !== 'undefined' ? padchar : '0';
+    var pad = new Array(1 + padlen).join(pad_char);
+    return (pad + num).slice(-pad.length);
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -232,11 +244,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     showLuckyNum(luckyNumDay1);
-    document.getElementById("special").innerHTML = luckyNumSpecial;
+
+    if (specialTicket == 1) {
+        document.getElementById("specialDisplay").innerHTML = 'Special Lucky Draw Number:';
+        document.getElementById("special").innerHTML = luckyNumSpecial;
+    }
+
     console.log(name);
     console.log(membership);
     console.log(guestType);
     console.log(shirt);
     console.log(noOfTickets);
     console.log(icNum);
+    localStorage[6] = 0;
 });

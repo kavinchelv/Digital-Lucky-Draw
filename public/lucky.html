@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
     <title>STEM Park Digital Lucky Draw</title>
 
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
@@ -28,8 +28,7 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-
-/**/</script>
+    </script>
 </head>
 
 <body>
@@ -37,8 +36,9 @@
     <div id="winnerName" style="font-family:'Cambria Math';font-weight:700;font-size:180%"></div>
     <br />
     <div id="luckyNumber" style="font-family:'Cambria Math';font-weight:700;font-size:180%"></div>
-    
-    <button onclick="drawLuckyNumber();">PIece of shit button</button>
+    <br />
+    <div id="icNumber" style="font-family:'Cambria Math';font-weight:700;font-size:180%"></div>
+    <button onclick="drawLuckyNumber();">Re-roll</button>
     <script src="lucky.js"></script>
 </body>
 </html>
