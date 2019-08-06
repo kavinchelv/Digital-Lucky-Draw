@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             await saveLuckyNum(name, icNum, 3, luckyNumSpecial);
         }
     }
-
+//Displays generated lucky draw number for the participant based on the array provided. luckyNumDay1 or luckyNumDay2.
     showLuckyNum(luckyNumDay2);
 
     if (specialTicket == 1) {
