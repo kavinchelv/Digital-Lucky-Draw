@@ -19,7 +19,7 @@ async function submitForm(e) {
     var luckyNumDay1 = [];
     var luckyNumDay2 = [];
     var generatedNum = [];
-    var day = 1;
+    var day = 2;
 
     //Loop to generate initial Lucky Numbers
     for (i = 0; i < addTicketnum; i++) {

@@ -15,7 +15,7 @@ function submitForm(e) {
     //get values
     var internationalTickets = 6;
     var localTickets = 2;
-    var mentorTickets = 2;
+    var mentorTickets = 1;
     var nonMemberTickets = 0;
     var noOfTickets = 0;
     var specialTickets = 0;
@@ -68,6 +68,8 @@ function submitForm(e) {
         noOfTickets += 2;
     else if (stamps == 18)
         noOfTickets += 3;
+
+
 
     console.log(name);
     console.log(membership);

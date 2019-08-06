@@ -190,7 +190,7 @@ async function drawLuckyNumber() {
                     console.log('Generating new number...');
                     generatedNum = await randomNumberGenerate();
                     console.log('New number generated.');
-                    luckyNumDay2 = generatedNum[0];
+                    luckyNumDay2 = generatedNum[1];
                     console.log('New Number: ' + luckyNumDay2);
                     console.log('Checking if new number is duplicate...');
                     duplicate = await checkForDuplicateDay2(luckyNumDay2);
@@ -303,21 +303,116 @@ function retrieveWinnerId(luckyNum, day) {
 }
 
 function displayLuckyNumbers(luckyNumbers, name, icNum) {
-    document.getElementById("winnerName").innerHTML = name;
-    document.getElementById("luckyNumber").innerHTML = luckyNumbers;
-    document.getElementById("icNumber").innerHTML = icNum;
+    //document.getElementById("winnerName").innerHTML = name;
+    //document.getElementById("odometer").innerHTML = luckyNumbers;
+    //document.getElementById("icNumber").innerHTML = icNum;
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
+    document.getElementById("topbar").innerHTML = 'Loading';
+    localStorage.deleteArray('drawnLuckyNums');
+    localStorage.deleteArray('nameArrs');
+    localStorage.deleteArray('icNumArrs');
     var day = localStorage[9];
     var drawnLuckyNum = [];
     var nameArr = [];
     var icNumArr = [];
-    for (i = 0; i < 5; i++) {
-        drawnLuckyNum[i] = await drawLuckyNumber();
-        nameArr[i] = await retrieveWinnerName(drawnLuckyNum[i], day);
-        icNumArr[i] = await retrieveWinnerId(drawnLuckyNum[i], day);
-    }
-    displayLuckyNumbers(drawnLuckyNum, nameArr, icNumArr);
+    for (i = 0; i < 15; i++) {
 
+
+        document.getElementById("topbar").innerHTML = 'Loading';
+
+        drawnLuckyNum[i] = await drawLuckyNumber();
+        localStorage.pushArrayItem('drawnLuckyNums', drawnLuckyNum[i]);
+
+        document.getElementById("topbar").innerHTML = 'Loading.';
+
+        nameArr[i] = await retrieveWinnerName(drawnLuckyNum[i], day);
+        localStorage.pushArrayItem('nameArrs', nameArr[i]);
+
+        document.getElementById("topbar").innerHTML = 'Loading..';
+
+        icNumArr[i] = await retrieveWinnerId(drawnLuckyNum[i], day);
+        localStorage.pushArrayItem('icNumArrs', icNumArr[i]);
+
+        document.getElementById("topbar").innerHTML = 'Loading...';
+        document.getElementById("winnerName").innerHTML = i + 1;
+    }
+    document.getElementById("topbar").innerHTML = 'Are You Ready?';
+    console.log(drawnLuckyNum, nameArr, icNumArr);
+    localStorage[1] = 0;
 });
+
+//Fetch the array
+Storage.prototype.getArray = function (arrayName) {
+    var thisArray = [];
+    var fetchArrayObject = this.getItem(arrayName);
+    if (typeof fetchArrayObject !== 'undefined') {
+        if (fetchArrayObject !== null) { thisArray = JSON.parse(fetchArrayObject); }
+    }
+    return thisArray;
+}
+
+//Save the array
+Storage.prototype.pushArrayItem = function (arrayName, arrayItem) {
+    var existingArray = this.getArray(arrayName);
+    existingArray.push(arrayItem);
+    this.setItem(arrayName, JSON.stringify(existingArray));
+}
+
+//Remove an array
+Storage.prototype.deleteArray = function (arrayName) {
+    this.removeItem(arrayName);
+}
+
+document.body.onkeyup = function (e) {
+    if (e.keyCode == 32) {
+        document.getElementById("topbar").innerHTML = 'Abandon Hope All Ye Who Enter Here';
+        document.getElementById("winnerName").innerHTML = '';
+        odometer.innerHTML = 99999;
+        //your code
+        var drawnLuckyNum = localStorage.getArray('drawnLuckyNums');
+        //var drawnLuckyNum = [11111, 22222, 33333, 44444, 12345, 67890, 55555, 66666, 77777, 88888, 99999, 00000]
+        console.log(drawnLuckyNum);
+        var nameArr = localStorage.getArray('nameArrs');
+        //var nameArr = ['aaaaa', 'bbbbb', 'ccccc', 'ddddd', 'eeeee', 'fffff', 'ggggg', 'hhhhhh', 'iiiiii', 'jjjjj', 'kkkkkk', 'lsdjakh']
+        console.log(nameArr);
+        var icNumArr = localStorage.getArray('icNumArrs');
+        console.log(icNumArr);
+        var index = Number(localStorage[1]);
+
+        if (drawnLuckyNum[index] != undefined) {
+
+            setTimeout(function () {
+                odometer.innerHTML = drawnLuckyNum[index];
+            }, 1000);
+
+            setTimeout(function () {
+                document.getElementById("winnerName").innerHTML = nameArr[index];
+            }, 3000);
+
+            setTimeout(function () {
+                document.getElementById("topbar").innerHTML = 'Congratulations!';
+            }, 3000);
+
+            console.log(drawnLuckyNum[index]);
+        }
+        else {
+            document.getElementById("topbar").innerHTML = 'That\'s all folks';
+            odometer.innerHTML = 58008;
+            document.getElementById("winnerName").innerHTML = '';
+        }
+        console.log(index);
+        localStorage[1] = Number(localStorage[1]) + 1;
+    }
+}
+
+window.odometerOptions = {
+    auto: false, // Don't automatically initialize everything with class 'odometer'
+    selector: '.my-numbers', // Change the selector used to automatically find things to be animated
+    format: '(,ddd).ddd', // Change how digit groups are formatted, and how many digits are shown after the decimal point
+    duration: 5000, // Change how long the javascript expects the CSS animation to take
+    theme: 'car', // Specify the theme (if you have more than one theme css file on the page)
+    animation: 'count' // Count is a simpler animation method which just increments the value,
+    // use it when you're looking for something more subtle.
+};

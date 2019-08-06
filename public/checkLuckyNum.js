@@ -6,11 +6,9 @@ async function submitForm(e) {
     e.preventDefault();
 
     //get values
-    var icNum = getInputVal('icNum');
+    var icNum = getInputVal('name');
     var day = document.querySelector('input[name = "Day"]:checked').value;
     //Removes - and spaces from identification number
-    icNum = icNum.replace(/-/g, "");
-    icNum = icNum.replace(/ /g, "");
 
     console.log(icNum);
     //save message
@@ -59,7 +57,7 @@ function checkTicketNum(icNum, day) {
         if (day == 1) {
             var gent = db.ref('luckyDrawNumbers/day1');
             //Finding the participant to be retrieved 
-            var user = gent.orderByChild('idNum').equalTo(icNum);
+            var user = gent.orderByChild('name').equalTo(icNum);
             user.once("value", function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     console.log(snapshot.numChildren())
@@ -81,7 +79,7 @@ function checkTicketNum(icNum, day) {
         if (day == 2) {
             var gent = db.ref('luckyDrawNumbers/day2');
             //Finding the participant to be retrieved 
-            var user = gent.orderByChild('idNum').equalTo(icNum);
+            var user = gent.orderByChild('name').equalTo(icNum);
             user.once("value", function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     console.log(snapshot.numChildren())

@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
     <!-- Compiled and minified JavaScript -->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+    <!-- Odometr includes -->
+    <link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-plaza.css" />
+    <script src="http://github.hubspot.com/odometer/odometer.js"></script>
     <title>STEM Park Digital Lucky Draw</title>
 
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
@@ -31,14 +34,72 @@
     </script>
 </head>
 
-<body>
-    <h1>WINNER</h1>
-    <div id="winnerName" style="font-family:'Cambria Math';font-weight:700;font-size:180%"></div>
+<body style="background-color:#002c80">
+    <div id="topbar" style="text-align:center" class="winName"></div>
+    <div class="odometer-parent">
+        <div id="odometer" class="odometer">00000</div>
+    </div>
     <br />
-    <div id="luckyNumber" style="font-family:'Cambria Math';font-weight:700;font-size:180%"></div>
-    <br />
-    <div id="icNumber" style="font-family:'Cambria Math';font-weight:700;font-size:180%"></div>
-    <button onclick="drawLuckyNumber();">Re-roll</button>
+    <div id="winnerName" style="text-align:center" class="winName"></div>
+
+
     <script src="lucky.js"></script>
+    <script src="odometer.min.js"></script>
+    <style>
+        .odometer.odometer-auto-theme, .odometer.odometer-theme-plaza {
+            -moz-border-radius: 0.15em;
+            -webkit-border-radius: 0.15em;
+            -o-border-radius: 0.15em;
+            -ms-border-radius: 0.15em;
+            -khtml-border-radius: 0.15em;
+            border-radius: 0.15em;
+            background-color: #002c80;
+            font-family: "Helvetica Neue", sans-serif;
+            font-weight: 100;
+            padding: 0 0.12em;
+            line-height: 1.2em;
+            font-size: 20em;
+            color:antiquewhite;
+            background-size: 16px 16px;
+            align-content: center;
+        }
+
+        .odometer.odometer-inside.odometer-digit:first-child,
+        .odometer.odometer-inside.odometer-formatting-mark:nth-child(2),
+        .odometer.odometer-inside.odometer-digit:last-child {
+            display: none
+        }
+
+        .winName {
+            -moz-border-radius: 0.15em;
+            -webkit-border-radius: 0.15em;
+            -o-border-radius: 0.15em;
+            -ms-border-radius: 0.15em;
+            -khtml-border-radius: 0.15em;
+            border-radius: 0.15em;
+            background-color: #002c80;
+            color:antiquewhite;
+            font-family: "Helvetica Neue", sans-serif;
+            font-weight: 100;
+            padding: 0 0.12em;
+            line-height: 1.2em;
+            font-size: 8em;
+            background-size: 16px 16px;
+        }
+
+        .odometer-parent {
+            text-align: center;
+        }
+        .odometer.odometer-auto-theme .odometer-digit, .odometer.odometer-theme-plaza .odometer-digit {
+            -moz-border-radius: 0.1em;
+            -webkit-border-radius: 0.1em;
+            -o-border-radius: 0.1em;
+            -ms-border-radius: 0.1em;
+            -khtml-border-radius: 0.1em;
+            border-radius: 0.1em;
+            padding: 0 0.03em;
+            color: white;
+        }   
+    </style>
 </body>
 </html>
