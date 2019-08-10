@@ -405,6 +405,9 @@ document.body.onkeyup = function (e) {
         console.log(index);
         localStorage[1] = Number(localStorage[1]) + 1;
     }
+
+    else if (e.keyCode == 66)
+        document.location.href = "./index.html";
 }
 
 window.odometerOptions = {

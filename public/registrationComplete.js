@@ -5,6 +5,7 @@ const membership = localStorage[3];
 const guestType = localStorage[4];
 const shirt = localStorage[5];
 var specialTicket = localStorage[6];
+const day = localStorage[7];
 
 function showLuckyNum(luckyNum) {
         document.getElementById("write").innerHTML = luckyNum;
@@ -160,6 +161,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     var luckyNumDay1 = [];
     var luckyNumDay2 = [];
     var generatedNum = [];
+    var luckyNums = [];
 
     //Loop to generate initial Lucky Numbers
     for (i = 0; i < noOfTickets; i++) {
@@ -170,29 +172,29 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     //Loop to check and create/save Day 1 Tickets
-    //for (i = 0; i < noOfTickets; i++) {
-    //    console.log('Day 1 Loop entered')
-    //    var duplicate = await checkForDuplicateDay1(luckyNumDay1[i]);
-    //    console.log(duplicate);
-    //    if (duplicate == 1) {
-    //        while (duplicate == 1) {
-    //            console.log('Generating new number...');
-    //            generatedNum = await randomNumberGenerate();
-    //            console.log('New number generated.');
-    //            luckyNumDay1[i] = generatedNum[0];
-    //            console.log('New Number: ' + luckyNumDay1[i]);
-    //            console.log('Checking if new number is duplicate...');
-    //            duplicate = await checkForDuplicateDay1(luckyNumDay1[i]);
-    //            console.log(duplicate + ' OOOOO')
-    //        }
-    //        console.log('Duplicate Checking Done. Saving...');
-    //        await saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);
-    //    }
-    //    else if (duplicate != 1) {
-    //        console.log('No duplicates. Saving...');
-    //        await saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);
-    //    }
-    //}
+    for (i = 0; i < noOfTickets; i++) {
+        console.log('Day 1 Loop entered')
+        var duplicate = await checkForDuplicateDay1(luckyNumDay1[i]);
+        console.log(duplicate);
+        if (duplicate == 1) {
+            while (duplicate == 1) {
+                console.log('Generating new number...');
+                generatedNum = await randomNumberGenerate();
+                console.log('New number generated.');
+                luckyNumDay1[i] = generatedNum[0];
+                console.log('New Number: ' + luckyNumDay1[i]);
+                console.log('Checking if new number is duplicate...');
+                duplicate = await checkForDuplicateDay1(luckyNumDay1[i]);
+                console.log(duplicate + ' OOOOO')
+            }
+            console.log('Duplicate Checking Done. Saving...');
+            await saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);
+        }
+        else if (duplicate != 1) {
+            console.log('No duplicates. Saving...');
+            await saveLuckyNum(name, icNum, 1, luckyNumDay1[i]);
+        }
+    }
     
     //Loop to check and create/save Day 2 Tickets
     for (i = 0; i < noOfTickets; i++) {
@@ -243,7 +245,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-    showLuckyNum(luckyNumDay2);
+    if (day == 1)
+        luckyNums = luckyNumDay1;
+    else if (day == 2)
+        luckyNums = luckyNumDay2;
+
+    showLuckyNum(luckyNums);
 
     if (specialTicket == 1) {
         document.getElementById("specialDisplay").innerHTML = 'Special Lucky Draw Number:';
