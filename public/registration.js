@@ -27,7 +27,6 @@ function submitForm(e) {
     var shirt = document.querySelector('input[name = "Shirt"]:checked').value;
     var guestType = document.querySelector('input[name = "Type"]:checked').value;
     var stamps = document.querySelector('input[name = "Stamps"]:checked').value;
-    var day = document.querySelector('input[name = "Day"]:checked').value;
     var phoneNum = getInputVal('phoneNum');
     var icNum = getInputVal('icNum');
 
@@ -86,7 +85,6 @@ function submitForm(e) {
     localStorage[4] = guestType;
     localStorage[5] = shirt;
     localStorage[6] = specialTickets;
-    localStorage[7] = day;
     redirect();
 }
 
