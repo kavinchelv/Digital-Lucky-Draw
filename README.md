@@ -6,3 +6,5 @@ Firebase is used to host the website as well as provides a database to store gue
 odometer.js is used to provide the rolling animation for the numbers.
 
 index.html is the main the page inside the public folder
+
+https://test-9a69d.firebaseapp.com/registration.html
